@@ -33,16 +33,19 @@ HTMLWidgets.widget({
       responsive: true,
       checkOrientation: false,
       toggleDragModeOnDblclick: false,
+      ready: function(e){
+        cropper.setDragMode('crop');
+      },
       crop: function(e) {
         var d = e.detail;
         if(d.width || d.height){
           p.innerHTML = "Area: " + round(d.width) + "x" + round(d.height) + "+" + round(d.x) + "+" + round(d.y);
         }
       },
-      ready: function(e){
-        cropper.setDragMode('crop');
-      },
+      // This is not entirely correct but close
       cropstart: function(e){
+        if(e.detail.action ===  'crop')
+          cropper.clear();
         var ptr = e.detail.originalEvent;
         var d = cropper.getCanvasData();
         var x = (ptr.x - d.left) * (d.naturalWidth / d.width);
