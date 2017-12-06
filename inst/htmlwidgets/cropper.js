@@ -5,6 +5,7 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
     //document.body.style.padding = '0';
+    var round = Math.round;
     var img = document.createElement("img");
     var div = document.createElement("div");
     var p = document.createElement("p");
@@ -16,10 +17,8 @@ HTMLWidgets.widget({
     div.appendChild(p);
     el.appendChild(div);
 
-    window.cropper = new Cropper(img, {
-      //aspectRatio: 16 / 9,
+    var cropper = new Cropper(img, {
       background : true,
-      //dragMode : 'none',
       modal: false,
       guides: false,
       highlight: false,
@@ -33,17 +32,22 @@ HTMLWidgets.widget({
       zoomOnTouch : false,
       responsive: true,
       checkOrientation: false,
+      toggleDragModeOnDblclick: false,
       crop: function(e) {
         var d = e.detail;
-        var round = Math.round;
         if(d.width || d.height){
-          p.innerHTML = "area: " + round(d.width) + "x" + round(d.height) + "+" + round(d.x) + "+" + round(d.y);
-        } else {
-          p.innerHTML = "";
+          p.innerHTML = "Area: " + round(d.width) + "x" + round(d.height) + "+" + round(d.x) + "+" + round(d.y);
         }
       },
-      hover: function(e){
-        alert("hover");
+      ready: function(e){
+        cropper.setDragMode('crop');
+      },
+      cropstart: function(e){
+        var ptr = e.detail.originalEvent;
+        var d = cropper.getCanvasData();
+        var x = (ptr.x - d.left) * (d.naturalWidth / d.width);
+        var y = (ptr.y - d.top) * (d.naturalHeight / d.height);
+        p.innerHTML = "Point: " + round(x) + "+" + round(y);
       }
     });
 
