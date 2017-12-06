@@ -8,6 +8,7 @@ HTMLWidgets.widget({
     var img = document.createElement("img");
     var div = document.createElement("div");
     div.style = "height: 100%;";
+    img.style = "height: 100%;";
     img.setAttribute('alt', 'preview');
     div.appendChild(img);
     el.appendChild(div);
