@@ -7,13 +7,16 @@ HTMLWidgets.widget({
     //document.body.style.padding = '0';
     var img = document.createElement("img");
     var div = document.createElement("div");
+    var p = document.createElement("p");
+    p.style = "position: absolute; top: 0px; left:0; font-family: monospace; font-size: 18px; background-color: black; color:white; padding: 2px;";
     div.style = "height: 100%;";
     img.style = "height: 100%;";
     img.setAttribute('alt', 'preview');
     div.appendChild(img);
+    div.appendChild(p);
     el.appendChild(div);
 
-    var cropper = new Cropper(img, {
+    window.cropper = new Cropper(img, {
       //aspectRatio: 16 / 9,
       background : true,
       //dragMode : 'none',
@@ -29,8 +32,18 @@ HTMLWidgets.widget({
       zoomOnWheel : false,
       zoomOnTouch : false,
       responsive: true,
+      checkOrientation: false,
       crop: function(e) {
-
+        var d = e.detail;
+        var round = Math.round;
+        if(d.width || d.height){
+          p.innerHTML = "area: " + round(d.width) + "x" + round(d.height) + "+" + round(d.x) + "+" + round(d.y);
+        } else {
+          p.innerHTML = "";
+        }
+      },
+      hover: function(e){
+        alert("hover");
       }
     });
 
