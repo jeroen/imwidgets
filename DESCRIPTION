@@ -1,0 +1,11 @@
+Package: imwidgets
+Version: 0.1
+Title: Widgets for Inspecting Images
+Description: A collection of HTML widgets for viewing, cropping and inspecting images.
+Author: Jeroen Ooms
+Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
+License: MIT + file LICENSE
+Imports: htmlwidgets
+Encoding: UTF-8
+RoxygenNote: 6.0.1.9000
+Roxygen: list(markdown = TRUE)
