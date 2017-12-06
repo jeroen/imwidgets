@@ -3,4 +3,6 @@ dependencies:
     version: 1.1.3
     src: "htmlwidgets/lib/cropperjs"
     script: cropper.min.js
-    stylesheet: cropper.min.css
+    stylesheet:
+      - cropper.min.css
+      - extra.css

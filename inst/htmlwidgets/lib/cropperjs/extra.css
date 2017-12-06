@@ -1,0 +1,18 @@
+.geometry_label_box {
+  position: absolute;
+  top: 0;
+  left:0;
+  font-family: monospace;
+  font-size: 18px;
+  background-color: black;
+  color:white;
+  padding: 2px;
+}
+
+.cropper_image_wrapper{
+  height: 100%;
+}
+
+.cropper_image_element{
+  height: 100%;
+}

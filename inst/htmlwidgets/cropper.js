@@ -9,9 +9,9 @@ HTMLWidgets.widget({
     var img = document.createElement("img");
     var div = document.createElement("div");
     var p = document.createElement("p");
-    p.style = "position: absolute; top: 0px; left:0; font-family: monospace; font-size: 18px; background-color: black; color:white; padding: 2px;";
-    div.style = "height: 100%;";
-    img.style = "height: 100%;";
+    p.className = "geometry_label_box";
+    div.className = "cropper_image_wrapper";
+    img.className = "cropper_image_element";
     img.setAttribute('alt', 'preview');
     div.appendChild(img);
     div.appendChild(p);
