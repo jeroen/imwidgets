@@ -1,7 +1,7 @@
 .geometry_label_box {
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   font-family: monospace;
   font-size: 18px;
   background-color: black;
@@ -10,6 +10,7 @@
 }
 
 .cropper_image_wrapper{
+  position: relative;
   height: 100%;
 }
 

@@ -2,5 +2,8 @@
 
 export(cropper)
 export(cropperOutput)
+export(img)
+export(imgOutput)
 export(renderCropper)
+export(renderImg)
 import(htmlwidgets)
