@@ -2,30 +2,95 @@
 HTMLWidgets.widget({
 
   name: 'img',
-
   type: 'output',
 
   factory: function(el, width, height) {
 
-    var round = Math.round;
+    function offset(el) {
+      var rect = el.getBoundingClientRect();
+      var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
+    }
+
     function num(x) {
       x = Math.round(x);
       return (x < 0 ? "" : "+") + x;
+    }
+
+    function xw(){
+      return img.naturalWidth / img.width;
+    }
+
+    function xh(){
+      return img.naturalHeight / img.height;
+    }
+
+    function point(e){
+      var off = offset(container);
+      return {x : e.pageX - off.left, y : e.pageY - off.top};
+    }
+
+    function getrange(e){
+      var endpoint = point(e);
+      var x1 = Math.min(startpoint.x, endpoint.x);
+      var y1 = Math.min(startpoint.y, endpoint.y);
+      var width = Math.abs(startpoint.x - endpoint.x);
+      var height = Math.abs(startpoint.y - endpoint.y);
+      return {w : width, h :height, x : x1, y : y1 };
+    }
+
+    function moveshape(range){
+      if(!range || !range.w || !range.h){
+        shape.style.display = "none";
+      } else {
+        shape.style.display = "";
+        shape.style.left = range.x + "px";
+        shape.style.top = range.y + "px";
+        shape.style.width = range.w + 1 + "px";
+        shape.style.height = range.h + 1 + "px";
+      }
     }
 
     var container = document.createElement("div");
     container.setAttribute('class', 'basic-container');
     var textbox = document.createElement("div");
     textbox.setAttribute('class', 'basic-textbox');
+    var shape = document.createElement("div");
+    shape.setAttribute('class', 'basic-shape');
     var img = document.createElement("img");
     img.setAttribute('class', 'basic-img checkered');
     img.setAttribute("alt", "preview");
-    img.addEventListener("mousemove", function(e) {
-      var xw = img.naturalWidth / img.width;
-      var xh = img.naturalHeight / img.height ;
-      textbox.innerHTML = num(e.offsetX * xw) + num(e.offsetY * xh);
+
+    var startpoint;
+    container.addEventListener("mousedown", function(e) {
+      e.preventDefault();
+      startpoint = point(e);
     });
+    container.addEventListener("mouseup", function(e) {
+      e.preventDefault();
+      startpoint = null;
+    });
+    img.addEventListener("click", function(e) {
+      e.preventDefault();
+      moveshape();
+    });
+
+    container.addEventListener("mousemove", function(e) {
+      e.preventDefault();
+      if(startpoint){
+        var box = getrange(e);
+        moveshape(box);
+        textbox.innerHTML = Math.round(box.w * xw()) + "x" + Math.round(box.h * xh()) +
+          num((box.x - img.offsetLeft) * xw()) + num((box.y - img.offsetTop) * xh());
+      } else {
+        var pt = point(e);
+        textbox.innerHTML = num((pt.x - img.offsetLeft) * xw()) + num((pt.y - img.offsetTop) * xh());
+      }
+    });
+
     container.appendChild(img);
+    container.appendChild(shape);
     container.appendChild(textbox);
     el.appendChild(container);
 

@@ -21,7 +21,10 @@ img <- function(url, width = NULL, height = NULL, elementId = NULL) {
     sizingPolicy = htmlwidgets::sizingPolicy(
       padding = 0,
       browser.fill = TRUE,
-      viewer.fill = TRUE
+      viewer.fill = TRUE,
+      knitr.figure = FALSE,
+      knitr.defaultWidth = '100%',
+      knitr.defaultHeight = 'auto'
     ),
     package = 'imwidgets',
     elementId = elementId
