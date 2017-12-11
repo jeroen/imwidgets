@@ -70,17 +70,20 @@ HTMLWidgets.widget({
     img.setAttribute("alt", "preview");
 
     var startpoint;
+    var exitpoint;
     container.addEventListener("mousedown", function(e) {
       e.preventDefault();
+      exitpoint = null;
       startpoint = point(e);
     });
     container.addEventListener("mouseup", function(e) {
       e.preventDefault();
       copyclipboard();
-      startpoint = null;
+      exitpoint = point(e);
     });
     img.addEventListener("click", function(e) {
       e.preventDefault();
+      startpoint = exitpoint = null;
       moveshape();
       copyclipboard();
     });
@@ -90,6 +93,7 @@ HTMLWidgets.widget({
 
     container.addEventListener("mousemove", function(e) {
       e.preventDefault();
+      if(exitpoint) return;
       if(startpoint){
         var box = getrange(e);
         moveshape(box);
