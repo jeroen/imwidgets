@@ -9,7 +9,7 @@ HTMLWidgets.widget({
 
     var round = Math.round;
     function num(x) {
-      x =  Math.round(x);
+      x = Math.round(x);
       return (x < 0 ? "" : "+") + x;
     }
 
@@ -21,7 +21,9 @@ HTMLWidgets.widget({
     img.setAttribute('class', 'basic-img checkered');
     img.setAttribute("alt", "preview");
     img.addEventListener("mousemove", function(e) {
-      textbox.innerHTML = num(e.offsetX) + num(e.offsetY);
+      var xw = img.naturalWidth / img.width;
+      var xh = img.naturalHeight / img.height ;
+      textbox.innerHTML = num(e.offsetX * xw) + num(e.offsetY * xh);
     });
     container.appendChild(img);
     container.appendChild(textbox);
