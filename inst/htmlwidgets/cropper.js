@@ -6,6 +6,10 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
     //document.body.style.padding = '0';
     var round = Math.round;
+    function num(x) {
+      x =  Math.round(x);
+      return (x < 0 ? "" : "+") + x;
+    }
     var img = document.createElement("img");
     var div = document.createElement("div");
     var p = document.createElement("p");
@@ -39,7 +43,7 @@ HTMLWidgets.widget({
       crop: function(e) {
         var d = e.detail;
         if(d.width || d.height){
-          p.innerHTML = "Area: " + round(d.width) + "x" + round(d.height) + "+" + round(d.x) + "+" + round(d.y);
+          p.innerHTML = "Area: " + round(d.width) + "x" + round(d.height) + num(d.x) + num(d.y);
         }
       },
       // This is not entirely correct but close
@@ -48,9 +52,9 @@ HTMLWidgets.widget({
           cropper.clear();
         var ptr = e.detail.originalEvent;
         var d = cropper.getCanvasData();
-        var x = (ptr.x - d.left) * (d.naturalWidth / d.width);
-        var y = (ptr.y - d.top) * (d.naturalHeight / d.height);
-        p.innerHTML = "Point: " + round(x) + "+" + round(y);
+        var x = (ptr.layerX - d.left) * (d.naturalWidth / d.width);
+        var y = (ptr.layerY - d.top) * (d.naturalHeight / d.height);
+        p.innerHTML = "Point: " + num(x) + num(y);
       }
     });
 
