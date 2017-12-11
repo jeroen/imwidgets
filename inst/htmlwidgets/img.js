@@ -90,6 +90,9 @@ HTMLWidgets.widget({
     textbox.addEventListener("mousemove", function(e){
       e.stopPropagation();
     });
+    textbox.addEventListener("click", function(e){
+      e.stopPropagation();
+    });
 
     container.addEventListener("mousemove", function(e) {
       e.preventDefault();
