@@ -1,0 +1,45 @@
+---
+title: "Widgets for Inspecting Images in R"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_caption: false
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{Widgets for Inspecting Images in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Some HTML widgets for viewing images.
+
+## Base Image
+
+Creates a simple HTML `<img>` tag and insert that into the document.
+
+```{r}
+library(imwidgets)
+img("https://media.nu.nl/m/wrzx2roabq95_wd1280.jpg")
+```
+
+
+```{r}
+img("https://jeroen.github.io/images/frink.png")
+```
+
+## Cropper
+
+Wrapper for [cropperjs](https://fengyuanchen.github.io/cropperjs/).
+
+```{r}
+cropper("https://media.nu.nl/m/wrzx2roabq95_wd1280.jpg")
+```
+
+```{r}
+cropper("https://jeroen.github.io/images/frink.png")
+```
+
