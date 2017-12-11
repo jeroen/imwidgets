@@ -6,6 +6,11 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
+    function copyclipboard(){
+      textbox.select();
+      document.execCommand("Copy");
+    }
+
     function offset(el) {
       var rect = el.getBoundingClientRect();
       var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -54,7 +59,9 @@ HTMLWidgets.widget({
 
     var container = document.createElement("div");
     container.setAttribute('class', 'basic-container');
-    var textbox = document.createElement("div");
+    var textbox = document.createElement("input");
+    textbox.setAttribute('type', 'text');
+    textbox.setAttribute('size', '15');
     textbox.setAttribute('class', 'basic-textbox');
     var shape = document.createElement("div");
     shape.setAttribute('class', 'basic-shape');
@@ -69,11 +76,16 @@ HTMLWidgets.widget({
     });
     container.addEventListener("mouseup", function(e) {
       e.preventDefault();
+      copyclipboard();
       startpoint = null;
     });
     img.addEventListener("click", function(e) {
       e.preventDefault();
       moveshape();
+      copyclipboard();
+    });
+    textbox.addEventListener("mousemove", function(e){
+      e.stopPropagation();
     });
 
     container.addEventListener("mousemove", function(e) {
@@ -81,11 +93,11 @@ HTMLWidgets.widget({
       if(startpoint){
         var box = getrange(e);
         moveshape(box);
-        textbox.innerHTML = Math.round(box.w * xw()) + "x" + Math.round(box.h * xh()) +
+        textbox.value = Math.round(box.w * xw()) + "x" + Math.round(box.h * xh()) +
           num((box.x - img.offsetLeft) * xw()) + num((box.y - img.offsetTop) * xh());
       } else {
         var pt = point(e);
-        textbox.innerHTML = num((pt.x - img.offsetLeft) * xw()) + num((pt.y - img.offsetTop) * xh());
+        textbox.value = num((pt.x - img.offsetLeft) * xw()) + num((pt.y - img.offsetTop) * xh());
       }
     });
 
